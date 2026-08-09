@@ -1,0 +1,28 @@
+{
+  "name": "electpynasa",
+  "version": "3.0.0",
+  "description": "Professional-grade desktop environment for high-precision astronomical image processing, GHS stretching, multi-channel alignment, and DZI pyramid tiling.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . --no-sandbox",
+    "test:python": "PYTHONPATH=src python -m pytest tests/ -v"
+  },
+  "keywords": [
+    "electron",
+    "python",
+    "astronomy",
+    "fits",
+    "tiff",
+    "generalized-hyperbolic-stretch",
+    "ghs",
+    "astroalign",
+    "dzi",
+    "deep-zoom",
+    "jwst"
+  ],
+  "author": "electPyNasa Development Team",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^25.0.0"
+  }
+}

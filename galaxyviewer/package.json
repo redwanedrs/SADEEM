@@ -1,0 +1,31 @@
+{
+  "name": "galaxyviewer",
+  "version": "1.0.0",
+  "description": "High-performance Deep Zoom Image (DZI) viewer for multi-gigabyte astronomical imagery.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dzi",
+    "deep-zoom",
+    "openseadragon",
+    "astronomy",
+    "viewer",
+    "jwst",
+    "fits",
+    "tiff"
+  ],
+  "author": "Nasa Hackathon 2025",
+  "license": "MIT",
+  "dependencies": {
+    "openseadragon": "^4.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vite": "^5.2.0"
+  }
+}

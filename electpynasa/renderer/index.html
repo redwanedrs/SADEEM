@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';" />
+    <title>electPyNasa Image Processor</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1>electPyNasa</h1>
+            <p class="subtitle">High-Fidelity Astronomical Image Processing Engine</p>
+        </header>
+
+        <nav class="tabs" role="tablist">
+            <button class="tab-button active" data-tab="single" role="tab" aria-selected="true">
+                Single Channel GHS
+            </button>
+            <button class="tab-button" data-tab="batch" role="tab" aria-selected="false">
+                Color Composite
+            </button>
+            <button class="tab-button" data-tab="pyramid" role="tab" aria-selected="false">
+                Pyramid Tiler
+            </button>
+        </nav>
+
+        <!-- =================== Single Channel =================== -->
+        <section id="single-mode" class="tab-content active" role="tabpanel">
+            <div class="form-group">
+                <label for="single-file-path">Input Grayscale Image (.fits, .fit, .tif, .tiff)</label>
+                <div class="file-input-group">
+                    <input type="text" id="single-file-path" placeholder="Browse to select an astronomical input image..." readonly />
+                    <button class="btn-secondary" data-action="browse" data-target="single-file-path">Browse</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>GHS Configuration Parameters</label>
+                <div class="slider-group">
+                    <span>Stretch Factor (k)</span>
+                    <input type="range" id="k" min="0.1" max="10.0" step="0.1" value="2.5" />
+                    <span class="slider-value" id="k-value">2.5</span>
+                </div>
+                <div class="slider-group">
+                    <span>Local Intensity (L)</span>
+                    <input type="range" id="L" min="0.1" max="20.0" step="0.1" value="6.0" />
+                    <span class="slider-value" id="L-value">6.0</span>
+                </div>
+                <div class="slider-group">
+                    <span>Symmetry Point (s)</span>
+                    <input type="range" id="s" min="0.01" max="1.0" step="0.01" value="0.20" />
+                    <span class="slider-value" id="s-value">0.20</span>
+                </div>
+                <div class="slider-group">
+                    <span>Shadow Protection (sp)</span>
+                    <input type="range" id="sp" min="0.0" max="0.5" step="0.005" value="0.01" />
+                    <span class="slider-value" id="sp-value">0.01</span>
+                </div>
+                <div class="slider-group">
+                    <span>Highlight Clip Limit (hp)</span>
+                    <input type="range" id="hp" min="0.5" max="1.0" step="0.005" value="0.98" />
+                    <span class="slider-value" id="hp-value">0.98</span>
+                </div>
+            </div>
+
+            <button class="btn-primary" data-action="run-single">Apply GHS Stretch</button>
+        </section>
+
+        <!-- =================== Color Composite =================== -->
+        <section id="batch-mode" class="tab-content" role="tabpanel">
+            <div class="form-group">
+                <label for="red-file-path">Red Channel File (e.g. F444W / Long Infrared)</label>
+                <div class="file-input-group">
+                    <input type="text" id="red-file-path" placeholder="Browse Red band image..." readonly />
+                    <button class="btn-secondary" data-action="browse" data-target="red-file-path">Browse</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="green-file-path">Green Channel File (e.g. F200W / Mid Infrared)</label>
+                <div class="file-input-group">
+                    <input type="text" id="green-file-path" placeholder="Browse Green band image..." readonly />
+                    <button class="btn-secondary" data-action="browse" data-target="green-file-path">Browse</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="blue-file-path">Blue Channel File (e.g. F090W / Short Wavelength)</label>
+                <div class="file-input-group">
+                    <input type="text" id="blue-file-path" placeholder="Browse Blue band image..." readonly />
+                    <button class="btn-secondary" data-action="browse" data-target="blue-file-path">Browse</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Composite Tuning</label>
+                <div class="slider-group">
+                    <span>Saturation</span>
+                    <input type="range" id="saturation" min="0.0" max="3.0" step="0.05" value="1.35" />
+                    <span class="slider-value" id="saturation-value">1.35</span>
+                </div>
+                <div class="slider-group">
+                    <span>Lupton Q Factor</span>
+                    <input type="range" id="qfactor" min="0.5" max="20.0" step="0.5" value="7.5" />
+                    <span class="slider-value" id="qfactor-value">7.5</span>
+                </div>
+            </div>
+
+            <button class="btn-primary" data-action="run-batch">Align &amp; Composite Channels</button>
+        </section>
+
+        <!-- =================== Pyramid Tiler =================== -->
+        <section id="pyramid-mode" class="tab-content" role="tabpanel">
+            <div class="form-group">
+                <label for="pyramid-file-path">Input Image (.tif, .tiff, .jpg, .jpeg, .png, .webp)</label>
+                <div class="file-input-group">
+                    <input type="text" id="pyramid-file-path" placeholder="Select a high-resolution image..." readonly />
+                    <button class="btn-secondary" data-action="browse" data-target="pyramid-file-path">Browse</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Pyramid Construction Properties</label>
+                <div class="option-box">
+                    <div class="option-item">
+                        <span>Tile Size (px)</span>
+                        <input type="number" id="tileSize" value="256" min="32" max="1024" />
+                    </div>
+                    <div class="option-item">
+                        <span>Tile Overlap (px)</span>
+                        <input type="number" id="overlap" value="1" min="0" max="32" />
+                    </div>
+                    <div class="option-item">
+                        <span>Format</span>
+                        <select id="format">
+                            <option value="jpeg" selected>JPEG (Compressed)</option>
+                            <option value="png">PNG (Lossless)</option>
+                            <option value="webp">WebP (Optimized)</option>
+                        </select>
+                    </div>
+                    <div class="option-item">
+                        <span>Quality (1-100)</span>
+                        <input type="range" id="quality" min="1" max="100" value="90" />
+                        <span class="slider-value" id="quality-value">90</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-primary" data-action="run-pyramid">Create Deep Zoom Pyramid</button>
+        </section>
+
+        <!-- =================== Progress + Log + Result =================== -->
+        <div class="progress-bar-container" id="progressBarContainer" hidden>
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+            <span class="progress-bar-label" id="progressBarLabel">0%</span>
+        </div>
+
+        <div id="log-panel" class="log-panel">
+            <div class="log-header">
+                <h3>Pipeline Execution Console</h3>
+                <div class="log-actions">
+                    <button class="btn-secondary btn-small" data-action="clear-log">Clear</button>
+                </div>
+            </div>
+            <div id="processing-log" class="processing-log">
+                <div class="log-entry info">Console ready. Awaiting pipeline invocation...</div>
+            </div>
+        </div>
+
+        <div id="result-area" class="result-area" hidden></div>
+
+        <footer class="app-footer">
+            <span id="status-text">Idle</span>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

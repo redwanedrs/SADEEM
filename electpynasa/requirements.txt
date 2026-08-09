@@ -1,0 +1,10 @@
+# ElectPyNasa runtime dependencies
+#
+# Pin major versions to known-good releases; minor versions are left
+# floating so security fixes are picked up automatically.
+
+numpy>=1.23
+opencv-python-headless>=4.7
+tifffile>=2023.3.15
+astropy>=5.3
+astroalign>=2.4

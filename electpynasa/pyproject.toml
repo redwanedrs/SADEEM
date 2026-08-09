@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "electpynasa"
+version = "3.0.0"
+description = "Professional astronomical image processing library: GHS stretching, multi-channel alignment, smart color balance, and DZI pyramid tiling."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "electPyNasa Development Team" }]
+keywords = [
+    "astronomy", "fits", "tiff", "jwst", "ghs",
+    "generalized-hyperbolic-stretch", "astroalign", "dzi", "deep-zoom",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Software Architecture :: Modular",
+]
+dependencies = [
+    "numpy>=1.23",
+    "opencv-python-headless>=4.7",
+    "tifffile>=2023.3.15",
+    "astropy>=5.3",
+    "astroalign>=2.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+]
+
+[project.scripts]
+electpynasa-grayscale = "electpynasa.cli.grayscale:main"
+electpynasa-composite = "electpynasa.cli.composite:main"
+electpynasa-pyramid = "electpynasa.cli.pyramid:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+electpynasa = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra --strict-markers"
