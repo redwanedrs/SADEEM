@@ -12,11 +12,11 @@
 
 Built for the **NASA Space Apps Challenge 2025** by:
 
-- DELLAL Radouane
+- DELLAL Radouane (team leader)
 - ALI HALASA ABDERAHMEN
 - LOUNANSA ABDERAHMEN
 - YOUSEF HARMOUNI
-- BOUALLAG YASMINE
+- BOUAaLLAG YASMINE
 - MERSEL FARES
 
 ---
